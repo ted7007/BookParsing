@@ -1,6 +1,6 @@
-﻿namespace HTTPApiTemplate.Dto.Output.Product;
+﻿namespace BookParserAPI.Dto.Output.Product;
 
-public class ProductDto
+public class BookDto
 {
     public Guid Id { get; set; }
 

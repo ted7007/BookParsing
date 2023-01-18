@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTTPApiTemplate", "HTTPApiTemplate\HTTPApiTemplate.csproj", "{94563BFF-F482-47A9-9139-039991C2378A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookParserAPI", "BookParserAPI\BookParserAPI.csproj", "{94563BFF-F482-47A9-9139-039991C2378A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

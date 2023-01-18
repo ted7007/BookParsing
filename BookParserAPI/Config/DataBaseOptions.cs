@@ -1,4 +1,4 @@
-﻿namespace HTTPApiTemplate.Config;
+﻿namespace BookParserAPI.Config;
 
 public class DataBaseOptions
 {

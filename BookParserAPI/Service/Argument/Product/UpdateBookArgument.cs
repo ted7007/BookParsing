@@ -1,6 +1,6 @@
-﻿namespace HTTPApiTemplate.Models;
+﻿namespace BookParserAPI.Service.Argument.Product;
 
-public class Product
+public class UpdateBookArgument
 {
     public Guid Id { get; set; }
 

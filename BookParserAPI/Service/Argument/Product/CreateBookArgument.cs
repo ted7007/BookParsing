@@ -1,8 +1,7 @@
-﻿namespace HTTPApiTemplate.Dto.Input.Product;
+﻿namespace BookParserAPI.Service.Argument.Product;
 
-public class UpdateProductDto
+public class CreateBookArgument
 {
-
     public string Name { get; set; }
 
     public decimal Price { get; set; }

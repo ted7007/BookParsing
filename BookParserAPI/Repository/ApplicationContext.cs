@@ -1,10 +1,10 @@
-﻿using HTTPApiTemplate.Models;
+﻿using BookParserAPI.Models;
 using Microsoft.EntityFrameworkCore;
-namespace HTTPApiTemplate.Repository;
+namespace BookParserAPI.Repository;
 
 public class ApplicationContext : DbContext
 {
-    public DbSet<Models.Product> Products { get; set; }
+    public DbSet<Models.Book> Products { get; set; }
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
     {

@@ -1,11 +1,11 @@
 using System.Data.Common;
 using System.Reflection;
-using HTTPApiTemplate.Models;
-using HTTPApiTemplate.Repository;
+using BookParserAPI.Models;
+using BookParserAPI.Repository;
 using Microsoft.EntityFrameworkCore;
-using HTTPApiTemplate.Config;
-using HTTPApiTemplate.Repository.Product;
-using HTTPApiTemplate.Service;
+using BookParserAPI.Config;
+using BookParserAPI.Repository.Product;
+using BookParserAPI.Service;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +16,7 @@ var connectionString = GetConnectionString(builder.Environment.EnvironmentName, 
 builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseNpgsql(connectionString));
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace HTTPApiTemplate.Repository.Product;
+namespace BookParserAPI.Repository.Product;
 
 public class ProductRepository : IProductRepository
 {
@@ -10,20 +10,20 @@ public class ProductRepository : IProductRepository
     {
         _context = context;
     }
-    public async Task<Models.Product> CreateAsync(Models.Product product)
+    public async Task<Models.Book> CreateAsync(Models.Book book)
     {
-        var res = await _context.Products.AddAsync(product);
+        var res = await _context.Products.AddAsync(book);
         await _context.SaveChangesAsync();
         
         return res.Entity;
     }
 
-    public async Task<IEnumerable<Models.Product>> GetAllAsync()
+    public async Task<IEnumerable<Models.Book>> GetAllAsync()
     {
         return await _context.Products.ToListAsync();
     }
 
-    public async Task<Models.Product?> GetAsync(Guid id)
+    public async Task<Models.Book?> GetAsync(Guid id)
     {
         return await _context.Products.FindAsync(id);
     }
@@ -35,9 +35,9 @@ public class ProductRepository : IProductRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(Models.Product product)
+    public async Task UpdateAsync(Models.Book book)
     {
-        _context.Products.Update(product);
+        _context.Products.Update(book);
         await _context.SaveChangesAsync();
     }
 }
