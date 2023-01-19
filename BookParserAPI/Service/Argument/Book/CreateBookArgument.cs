@@ -1,4 +1,4 @@
-﻿namespace BookParserAPI.Service.Argument.Product;
+﻿namespace BookParserAPI.Service.Argument.Book;
 
 public class CreateBookArgument
 {

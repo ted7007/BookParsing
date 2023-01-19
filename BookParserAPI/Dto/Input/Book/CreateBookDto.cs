@@ -1,9 +1,7 @@
-﻿namespace BookParserAPI.Service.Argument.Product;
+﻿namespace BookParserAPI.Dto.Input.Book;
 
-public class UpdateBookArgument
+public class CreateBookDto
 {
-    public Guid Id { get; set; }
-
     public string Name { get; set; }
 
     public string Author { get; set; }

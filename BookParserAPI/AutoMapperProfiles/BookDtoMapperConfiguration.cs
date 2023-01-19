@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BookParserAPI.Dto.Output.Product;
+using BookParserAPI.Dto.Output.Book;
 using BookParserAPI.Models;
 
 namespace BookParserAPI.AutoMapperProfiles;

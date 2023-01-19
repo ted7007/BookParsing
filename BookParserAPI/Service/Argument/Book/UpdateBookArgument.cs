@@ -1,6 +1,6 @@
-﻿namespace BookParserAPI.Dto.Output.Book;
+﻿namespace BookParserAPI.Service.Argument.Book;
 
-public class BookDto
+public class UpdateBookArgument
 {
     public Guid Id { get; set; }
 
