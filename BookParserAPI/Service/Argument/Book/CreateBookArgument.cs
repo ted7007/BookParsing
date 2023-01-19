@@ -1,9 +1,7 @@
-﻿namespace BookParserAPI.Models;
+﻿namespace BookParserAPI.Service.Argument.Book;
 
-public class Book
+public class CreateBookArgument
 {
-    public Guid Id { get; set; }
-
     public string Name { get; set; }
 
     public string Author { get; set; }

@@ -1,5 +1,5 @@
 ﻿using BookParserAPI.Models;
-using BookParserAPI.Service.Argument.Product;
+using BookParserAPI.Service.Argument.Book;
 
 namespace BookParserAPI.Service;
 

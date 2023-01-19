@@ -1,6 +1,6 @@
-﻿namespace BookParserAPI.Models;
+﻿namespace BookParserAPI.Service.Argument.Book;
 
-public class Book
+public class UpdateBookArgument
 {
     public Guid Id { get; set; }
 

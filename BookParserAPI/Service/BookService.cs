@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BookParserAPI.Models;
 using BookParserAPI.Repository.Product;
-using BookParserAPI.Service.Argument.Product;
+using BookParserAPI.Service.Argument.Book;
 
 namespace BookParserAPI.Service;
 
