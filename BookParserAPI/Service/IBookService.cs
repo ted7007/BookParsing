@@ -11,6 +11,6 @@ public interface IBookService
 
     Task<IEnumerable<Book>> GetAllAsync();
 
-    Task<Book?> GetAsync(Guid id);
+    Task<Book?> GetAsync(string ISBN);
 
 }

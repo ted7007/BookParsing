@@ -1,4 +1,6 @@
-﻿namespace BookParserAPI.Service.Argument.Book;
+﻿using BookParserAPI.Models;
+
+namespace BookParserAPI.Service.Argument.Book;
 
 public class CreateBookArgument
 {
@@ -18,5 +20,5 @@ public class CreateBookArgument
 
     public string Genre { get; set; }
 
-    public List<string> Tags { get; set; }
+    public ICollection<Models.Tag> Tags { get; set; }
 }

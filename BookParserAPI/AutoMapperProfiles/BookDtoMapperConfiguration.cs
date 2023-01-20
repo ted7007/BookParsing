@@ -8,6 +8,7 @@ public class BookDtoMapperConfiguration : Profile
 {
     public BookDtoMapperConfiguration()
     {
+        AllowNullCollections = true;
         CreateMap<Book, BookDto>();
         CreateMap<BookDto, Book>();
         

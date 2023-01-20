@@ -1,9 +1,9 @@
-﻿namespace BookParserAPI.Service.Argument.Book;
+﻿using BookParserAPI.Models;
+
+namespace BookParserAPI.Service.Argument.Book;
 
 public class UpdateBookArgument
 {
-    public Guid Id { get; set; }
-
     public string Name { get; set; }
 
     public string Author { get; set; }
@@ -20,5 +20,5 @@ public class UpdateBookArgument
 
     public string Genre { get; set; }
 
-    public List<string> Tags { get; set; }
+    public ICollection<Models.Tag> Tags { get; set; }
 }
