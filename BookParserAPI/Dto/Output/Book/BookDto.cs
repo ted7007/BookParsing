@@ -1,9 +1,10 @@
-﻿namespace BookParserAPI.Dto.Output.Book;
+﻿using BookParserAPI.Dto.Output.Tag;
+using BookParserAPI.Models;
+
+namespace BookParserAPI.Dto.Output.Book;
 
 public class BookDto
 {
-    public Guid Id { get; set; }
-
     public string Name { get; set; }
 
     public string Author { get; set; }
@@ -20,5 +21,5 @@ public class BookDto
 
     public string Genre { get; set; }
 
-    public List<string> Tags { get; set; }
+    public ICollection<TagDto> Tags { get; set; }
 }

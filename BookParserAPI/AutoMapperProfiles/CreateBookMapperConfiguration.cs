@@ -9,6 +9,8 @@ public class CreateBookMapperConfiguration : Profile
 {
     public CreateBookMapperConfiguration()
     {
+        
+        AllowNullCollections = true;
         CreateMap<CreateBookDto, CreateBookArgument>();  
         CreateMap<CreateBookArgument, Book>(); 
         

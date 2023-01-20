@@ -4,19 +4,28 @@ using BookParserAPI.Models;
 using BookParserAPI.Repository;
 using Microsoft.EntityFrameworkCore;
 using BookParserAPI.Config;
-using BookParserAPI.Repository.Product;
+using BookParserAPI.Repository.Book;
+using BookParserAPI.Repository.Tag;
 using BookParserAPI.Service;
+using Microsoft.Extensions.Options;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-var connectionString = GetConnectionString(builder.Environment.EnvironmentName, builder);
+var connectionString =  GetConnectionString(builder.Environment.EnvironmentName, builder);
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
-    options.UseNpgsql(connectionString));
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
+    options.UseMySql(connectionString,
+                     ServerVersion.AutoDetect(connectionString),
+                     options => options.EnableRetryOnFailure(
+                         maxRetryCount: 5,
+                         maxRetryDelay: System.TimeSpan.FromSeconds(30),
+                         errorNumbersToAdd: null)));
+builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<ITagRepository, TagRepository>();
+builder.Services.AddScoped<ITagService, TagService>();
 builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
@@ -27,28 +36,26 @@ app.MapGet("/", () => $"{app.Environment.EnvironmentName}");
 
 app.Run();
 
-string? GetConnectionString(string stage, WebApplicationBuilder hostBuilder)
+string GetConnectionString(string stage, WebApplicationBuilder hostBuilder)
 {
-    switch (stage)
-    {
-        case "Development":
-            var dataBaseOptions =
-                hostBuilder.Configuration.GetSection(DataBaseOptions.OptionName)
-                    .Get<DataBaseOptions>();
-            if (dataBaseOptions is null)
-                throw new ArgumentNullException(nameof(dataBaseOptions));
-            DbConnectionStringBuilder connectionStringBuilder = new DbConnectionStringBuilder();
-            connectionStringBuilder.Add("Host", dataBaseOptions.Server);
-            connectionStringBuilder.Add("Port", dataBaseOptions.Port);
-            connectionStringBuilder.Add("Username", dataBaseOptions.UserName);
-            connectionStringBuilder.Add("Database", dataBaseOptions.DatabaseName);
-            connectionStringBuilder.Add("Password", dataBaseOptions.Password);
-            return connectionStringBuilder.ConnectionString;
-            break;
-        default:
-            return null;
+    
+    var dataBaseOptions =
+        hostBuilder.Configuration.GetSection(DataBaseOptions.OptionName)
+            .Get<DataBaseOptions>();
+    if (dataBaseOptions is null)
+        throw new ArgumentNullException(nameof(dataBaseOptions));
+    DbConnectionStringBuilder connectionStringBuilder = new DbConnectionStringBuilder();
+    connectionStringBuilder.Add("server", dataBaseOptions.Server);
+    connectionStringBuilder.Add("port", dataBaseOptions.Port);
+    connectionStringBuilder.Add("uid", dataBaseOptions.UserName);
+    connectionStringBuilder.Add("database", dataBaseOptions.DatabaseName);
+    connectionStringBuilder.Add("pwd", dataBaseOptions.Password);
+    var result = connectionStringBuilder.ConnectionString;
+    if (string.IsNullOrEmpty(result))
+        throw new InvalidCastException("connection string is null");
+    return connectionStringBuilder.ConnectionString;
 
-    }
+
 }
 /*  todo
  

@@ -1,16 +1,16 @@
 ﻿using BookParserAPI.Models;
 
-namespace BookParserAPI.Repository.Product;
+namespace BookParserAPI.Repository.Book;
 
-public interface IProductRepository
+public interface IBookRepository
 { 
     Task<Models.Book> CreateAsync(Models.Book book);
     
     Task<IEnumerable<Models.Book>> GetAllAsync();
 
-    Task<Models.Book?> GetAsync(Guid id);
+    Task<Models.Book?> GetAsync(string isbn);
 
-    Task RemoveAsync(Guid id);
+    Task RemoveAsync(string isbn);
 
     Task UpdateAsync(Models.Book book);
 }
