@@ -1,10 +1,8 @@
-﻿using BookParserAPI.Models;
-
-namespace BookParserAPI.Service;
+﻿namespace BookParserAPI.Service.Tag;
 
 public interface ITagService
 {
-    public Task<Tag?> GetByName(string name);
+    public Task<Models.Tag?> GetByNameAsync(string name);
 
-    public Task<Tag> Create(Tag argument);
+    public Task<Models.Tag> Create(Models.Tag argument);
 }

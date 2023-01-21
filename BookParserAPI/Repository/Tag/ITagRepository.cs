@@ -2,7 +2,7 @@
 
 public interface ITagRepository
 {
-    public Task<Models.Tag?> GetByName(string name);
+    public Task<Models.Tag?> GetByNameAsync(string name);
 
-    public Task<Models.Tag> Create(Models.Tag tag);
+    public Task<Models.Tag> CreateAsync(Models.Tag tag);
 }

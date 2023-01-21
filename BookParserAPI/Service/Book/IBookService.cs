@@ -1,16 +1,15 @@
-﻿using BookParserAPI.Models;
-using BookParserAPI.Service.Argument.Book;
+﻿using BookParserAPI.Service.Argument.Book;
 
-namespace BookParserAPI.Service;
+namespace BookParserAPI.Service.Book;
 
 public interface IBookService
 {
-    Task<Book> CreateAsync(CreateBookArgument argument);
+    Task<Models.Book> CreateAsync(CreateBookArgument argument);
 
     Task UpdateAsync(UpdateBookArgument argument);
 
-    Task<IEnumerable<Book>> GetAllAsync();
+    Task<IEnumerable<Models.Book>> GetAllAsync();
 
-    Task<Book?> GetAsync(string ISBN);
+    Task<Models.Book?> GetAsync(string ISBN);
 
 }
