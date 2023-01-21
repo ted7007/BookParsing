@@ -12,6 +12,7 @@ using BookParserAPI.Service.Book;
 using BookParserAPI.Service.ISBN;
 using BookParserAPI.Service.Tag;
 using Microsoft.Extensions.Options;
+using Serilog;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,15 +35,20 @@ builder.Services.AddScoped<IISBNRepository, ISBNRepository>();
 builder.Services.AddScoped<IISBNService, ISBNService>();
 builder.Services.AddScoped<IBookParser, BookParser>();
 builder.Services.AddControllers();
-
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+builder.Host.UseSerilog((context, services, config) =>
+{
+    config.WriteTo.Console();
+    config.WriteTo.File(Path.Combine("LogFiles", "Application", "diagnostics.txt"), Serilog.Events.LogEventLevel.Debug);
+});
+
 var app = builder.Build();
+
+app.UseSerilogRequestLogging();
 
 app.MapControllers();
 app.MapGet("/", () => $"{app.Environment.EnvironmentName}");
 app.MapGet("Home", () => "Hello");
-app.MapGet("ForKarina", () => "���� ���� 4 �� ��� ��������� ���, �� ��� �� � ���.. ������� ������ ��� �, ���� ������ ��������� Fedor");
-app.MapGet("ForMyFriend", () => "����� ����� ����� � ����� �����. ��� ���� ��������� � ������������ �����.");
 app.Run();
 
 string GetConnectionString(string stage, WebApplicationBuilder hostBuilder)
