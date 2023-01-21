@@ -15,17 +15,15 @@ namespace BookParserAPI.Controller;
 public class BookController : ControllerBase
 {
     private readonly IBookService _bookService;
-    private readonly IHostedService _parser;
     private readonly IISBNService _isbnService;
     private readonly IMapper _mapper;
     private readonly ILogger<BookController> _logger;
 
-    public BookController(IBookService bookService, IHostedService parser, IISBNService isbnService, IMapper mapper, ILogger<BookController> logger)
+    public BookController(IBookService bookService,  IISBNService isbnService, IMapper mapper, ILogger<BookController> logger)
     {
         _mapper = mapper;
         _logger = logger;
         _bookService = bookService;
-        _parser = parser;
         _isbnService = isbnService;
     }
     
@@ -52,5 +50,6 @@ public class BookController : ControllerBase
         var result = await _isbnService.GetAllAsync();
         return new OkObjectResult(result);
     }
+    
 
 }
