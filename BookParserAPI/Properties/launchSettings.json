@@ -5,13 +5,7 @@
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production",
-        "DataBaseOptions:Server":"127.0.0.1",
-        "DataBaseOptions:Port":"3308",
-        "DataBaseOptions:DatabaseName":"OrderDataBase",
-        "DataBaseOptions:UserName":"root",
-        "DataBaseOptions:Password":"password"
-        
+        "ASPNETCORE_ENVIRONMENT": "Production"
       }
     }
   }
