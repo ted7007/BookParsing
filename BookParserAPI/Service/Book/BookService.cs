@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using BookParserAPI.Models;
 using BookParserAPI.Repository.Book;
 using BookParserAPI.Service.Argument.Book;
+using BookParserAPI.Service.Tag;
 
-namespace BookParserAPI.Service;
+namespace BookParserAPI.Service.Book;
 
 public class BookService : IBookService
 {
@@ -19,12 +19,12 @@ public class BookService : IBookService
     }
 
 
-    public async Task<Book> CreateAsync(CreateBookArgument argument)
+    public async Task<Models.Book> CreateAsync(CreateBookArgument argument)
     {
         var result = await _repository.GetAsync(argument.ISBN);
         if (!(result is null))
             return result;
-        var mappedBook = _mapper.Map<CreateBookArgument, Book>(argument); 
+        var mappedBook = _mapper.Map<CreateBookArgument, Models.Book>(argument); 
         var bookForCreation = await ProcessBookForCreatingAndGetAsync(mappedBook);
         result = await _repository.CreateAsync(bookForCreation);
         return result;
@@ -32,16 +32,16 @@ public class BookService : IBookService
 
     public async Task UpdateAsync(UpdateBookArgument argument)
     {
-        var mappedBook = _mapper.Map<UpdateBookArgument, Book>(argument);
+        var mappedBook = _mapper.Map<UpdateBookArgument, Models.Book>(argument);
         await _repository.UpdateAsync(mappedBook);
     }
 
-    public async Task<IEnumerable<Book>> GetAllAsync()
+    public async Task<IEnumerable<Models.Book>> GetAllAsync()
     {
         return await _repository.GetAllAsync();
     }
 
-    public async Task<Book?> GetAsync(string ISBN)
+    public async Task<Models.Book?> GetAsync(string ISBN)
     {
         return await _repository.GetAsync(ISBN);
     }
@@ -51,13 +51,13 @@ public class BookService : IBookService
     /// </summary>
     /// <param name="book"></param>
     /// <returns></returns>
-    public async Task<Book> ProcessBookForCreatingAndGetAsync(Book book)
+    public async Task<Models.Book> ProcessBookForCreatingAndGetAsync(Models.Book book)
     {
         for (int i = 0; i < book.Tags.Count; i++)
         {
             var curTag = book.Tags.First();
             book.Tags.Remove(curTag);
-            var existsTag = await _tagService.GetByName(curTag.Name);
+            var existsTag = await _tagService.GetByNameAsync(curTag.Name);
             
             if (existsTag is null)
             {
