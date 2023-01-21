@@ -8,8 +8,6 @@ public class ApplicationContext : DbContext
 
     public DbSet<Models.Tag> Tags { get; set; }
 
-    public DbSet<Models.ISBN> ISBNs { get; set; }
-
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
     {
         Database.EnsureCreated();

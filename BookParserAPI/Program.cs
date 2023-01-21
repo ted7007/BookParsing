@@ -4,10 +4,8 @@ using BookParserAPI.Repository;
 using Microsoft.EntityFrameworkCore;
 using BookParserAPI.Config;
 using BookParserAPI.Repository.Book;
-using BookParserAPI.Repository.ISBN;
 using BookParserAPI.Repository.Tag;
 using BookParserAPI.Service.Book;
-using BookParserAPI.Service.ISBN;
 using BookParserAPI.Service.Tag;
 using Serilog;
 
@@ -29,8 +27,6 @@ builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<ITagService, TagService>();
-builder.Services.AddScoped<IISBNRepository, ISBNRepository>();
-builder.Services.AddScoped<IISBNService, ISBNService>();
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Host.UseSerilog((context, services, config) =>
