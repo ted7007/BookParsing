@@ -15,13 +15,15 @@ namespace BookParserAPI.Controller;
 public class BookController : ControllerBase
 {
     private readonly IBookService _bookService;
-    private readonly IBookParser _parser;
+    private readonly IHostedService _parser;
     private readonly IISBNService _isbnService;
     private readonly IMapper _mapper;
+    private readonly ILogger<BookController> _logger;
 
-    public BookController(IBookService bookService, IBookParser parser, IISBNService isbnService, IMapper mapper)
+    public BookController(IBookService bookService, IHostedService parser, IISBNService isbnService, IMapper mapper, ILogger<BookController> logger)
     {
         _mapper = mapper;
+        _logger = logger;
         _bookService = bookService;
         _parser = parser;
         _isbnService = isbnService;
@@ -44,11 +46,10 @@ public class BookController : ControllerBase
         return new OkObjectResult(mappedResult);
     }
 
-    [HttpPost("Load")]
-    public async Task<IActionResult> Load()
+    [HttpGet("ISBN")]
+    public async Task<IActionResult> GetAllISBN()
     {
-        await _parser.LoadISBNs();
-        var result =  await _isbnService.GetAllAsync();
+        var result = await _isbnService.GetAllAsync();
         return new OkObjectResult(result);
     }
 

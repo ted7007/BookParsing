@@ -20,6 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString =  GetConnectionString(builder.Environment.EnvironmentName, builder);
 
+
 builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseMySql(connectionString,
                      ServerVersion.AutoDetect(connectionString),
@@ -33,12 +34,12 @@ builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<ITagService, TagService>();
 builder.Services.AddScoped<IISBNRepository, ISBNRepository>();
 builder.Services.AddScoped<IISBNService, ISBNService>();
-builder.Services.AddScoped<IBookParser, BookParser>();
+builder.Services.AddHostedService<BookParser>();
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Host.UseSerilog((context, services, config) =>
 {
-    config.WriteTo.Console();
+    config.WriteTo.Console(Serilog.Events.LogEventLevel.Debug);
     config.WriteTo.File(Path.Combine("LogFiles", "Application", "diagnostics.txt"), Serilog.Events.LogEventLevel.Debug);
 });
 
@@ -49,6 +50,7 @@ app.UseSerilogRequestLogging();
 app.MapControllers();
 app.MapGet("/", () => $"{app.Environment.EnvironmentName}");
 app.MapGet("Home", () => "Hello");
+app.MapGet("Connection", () => connectionString);
 app.Run();
 
 string GetConnectionString(string stage, WebApplicationBuilder hostBuilder)
@@ -62,7 +64,7 @@ string GetConnectionString(string stage, WebApplicationBuilder hostBuilder)
     DbConnectionStringBuilder connectionStringBuilder = new DbConnectionStringBuilder();
     connectionStringBuilder.Add("server", dataBaseOptions.Server);
     if(!string.IsNullOrEmpty(dataBaseOptions.Port))
-    connectionStringBuilder.Add("port", dataBaseOptions.Port);
+        connectionStringBuilder.Add("port", dataBaseOptions.Port);
     connectionStringBuilder.Add("uid", dataBaseOptions.UserName);
     connectionStringBuilder.Add("database", dataBaseOptions.DatabaseName);
     connectionStringBuilder.Add("pwd", dataBaseOptions.Password);
