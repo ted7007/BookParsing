@@ -5,7 +5,6 @@ using BookParserAPI.Models;
 using BookParserAPI.Service;
 using BookParserAPI.Service.Argument.Book;
 using BookParserAPI.Service.Book;
-using BookParserAPI.Service.ISBN;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookParserAPI.Controller;
@@ -15,16 +14,14 @@ namespace BookParserAPI.Controller;
 public class BookController : ControllerBase
 {
     private readonly IBookService _bookService;
-    private readonly IISBNService _isbnService;
     private readonly IMapper _mapper;
     private readonly ILogger<BookController> _logger;
 
-    public BookController(IBookService bookService,  IISBNService isbnService, IMapper mapper, ILogger<BookController> logger)
+    public BookController(IBookService bookService,   IMapper mapper, ILogger<BookController> logger)
     {
         _mapper = mapper;
         _logger = logger;
         _bookService = bookService;
-        _isbnService = isbnService;
     }
     
     [HttpGet]
@@ -43,13 +40,4 @@ public class BookController : ControllerBase
         var mappedResult = _mapper.Map<Book, BookDto>(result);
         return new OkObjectResult(mappedResult);
     }
-
-    [HttpGet("ISBN")]
-    public async Task<IActionResult> GetAllISBN()
-    {
-        var result = await _isbnService.GetAllAsync();
-        return new OkObjectResult(result);
-    }
-    
-
 }
