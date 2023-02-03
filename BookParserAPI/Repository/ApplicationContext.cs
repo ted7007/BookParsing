@@ -8,6 +8,8 @@ public class ApplicationContext : DbContext
 
     public DbSet<Models.Tag> Tags { get; set; }
 
+    public DbSet<Models.User> Users { get; set; }
+
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
     {
         Database.EnsureCreated();
@@ -24,7 +26,10 @@ public class ApplicationContext : DbContext
             .Entity<Models.Tag>()
             .HasIndex(t => t.Name)
             .IsUnique();
-        
+        modelBuilder
+            .Entity<Models.User>()
+            .HasIndex(u => u.Login)
+            .IsUnique();
         base.OnModelCreating(modelBuilder);
     }
 }
