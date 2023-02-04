@@ -14,12 +14,14 @@ public class UserRepository : IUserRepository
     public async Task<Models.User> CreateAsync(Models.User user)
     {
         var result = await _context.Users.AddAsync(user);
+        await _context.SaveChangesAsync();
         return result.Entity;
     }
 
-    public Task<Models.User?> GetByLoginAsync(string login)
+    public async Task<Models.User?> GetByLoginAsync(string login)
     {
-        var result = _context.Users.Where(u => u.Login == login).FirstOrDefaultAsync();
+        var result = await _context.Users.Where(u => u.Login == login).FirstOrDefaultAsync();
+        await _context.SaveChangesAsync();
         return result;
     }
 }
