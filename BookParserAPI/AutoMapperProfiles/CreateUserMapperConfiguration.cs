@@ -9,7 +9,7 @@ public class CreateUserMapperConfiguration : Profile
 {
     public CreateUserMapperConfiguration()
     {
-        CreateMap<RegisterDto, CreateUserArgument>();
+        CreateMap<RegisterModel, CreateUserArgument>();
         CreateMap<CreateUserArgument, User>();
     }
 }

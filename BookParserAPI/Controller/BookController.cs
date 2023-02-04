@@ -5,10 +5,12 @@ using BookParserAPI.Models;
 using BookParserAPI.Service;
 using BookParserAPI.Service.Argument.Book;
 using BookParserAPI.Service.Book;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookParserAPI.Controller;
 
+[Authorize]
 [Route("api/v1/[controller]")]
 [ApiController]
 public class BookController : ControllerBase

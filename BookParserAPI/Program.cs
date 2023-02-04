@@ -5,8 +5,13 @@ using Microsoft.EntityFrameworkCore;
 using BookParserAPI.Config;
 using BookParserAPI.Repository.Book;
 using BookParserAPI.Repository.Tag;
+using BookParserAPI.Repository.User;
+using BookParserAPI.Security;
 using BookParserAPI.Service.Book;
 using BookParserAPI.Service.Tag;
+using BookParserAPI.Service.User;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
 
 
@@ -15,6 +20,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString =  GetConnectionString(builder.Environment.EnvironmentName, builder);
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateAudience = false,
+            ValidateIssuer = false,
+            RequireExpirationTime = false,
+            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+            ValidateIssuerSigningKey = true
+        };
+    });
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseMySql(connectionString,
@@ -23,25 +40,32 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
                          maxRetryCount: 5,
                          maxRetryDelay: System.TimeSpan.FromSeconds(30),
                          errorNumbersToAdd: null)));
+
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<ITagService, TagService>();
-builder.Services.AddControllers();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+builder.Services.AddControllers();
+
 builder.Host.UseSerilog((context, services, config) =>
 {
     config.WriteTo.Console(Serilog.Events.LogEventLevel.Debug);
     config.WriteTo.File(Path.Combine("LogFiles", "Application", "diagnostics.txt"), Serilog.Events.LogEventLevel.Debug);
 });
 
+
+
 var app = builder.Build();
 
 app.UseSerilogRequestLogging();
-
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 app.MapGet("/", () => $"{app.Environment.EnvironmentName}");
-app.MapGet("Home", () => "Hello");
 app.MapGet("Connection", () => connectionString);
 app.Run();
 

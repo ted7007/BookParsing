@@ -1,6 +1,6 @@
 ﻿namespace BookParserAPI.Dto.Input.User;
 
-public class RegisterModel
+public class LoginModel
 {
     public string Login { get; set; }
 
