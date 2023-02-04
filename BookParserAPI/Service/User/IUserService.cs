@@ -6,5 +6,5 @@ public interface IUserService
 {
     public Task<Models.User> CreateAsync(CreateUserArgument argument);
 
-    public Task<Models.User> GetByLoginAsync(string login);
+    public Task<Models.User?> GetByLoginAsync(string login);
 }
